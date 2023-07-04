@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int countNumbersWithConditions(int r) {
+    int dp[31][10] = {0}; // Масив dp для збереження проміжних результатів
+
+    // Перша цифра може бути 5 або 9
+    dp[1][5] = dp[1][9] = 1;
+
+    // Обчислюємо кількість чисел з розрядами r, що відповідають умові
+    for (int i = 2; i <= r; i++) {
+        for (int j = 0; j < 10; j++) {
+            // Забороняємо три однакові цифри підряд
+            for (int k = 0; k < 10; k++) {
+                if (k != j) {
+                    dp[i][j] += dp[i-1][k];
+                }
+            }
+        }
+    }
+
+    // Сумуємо кількість чисел, що закінчуються на 5 або 9
+    int total_count = dp[r][5] + dp[r][9];
+
+    return total_count;
+}
+
+int main() {
+    int r;
+    printf("Введіть ціле число р (р ≤ 30): ");
+    scanf("%d", &r);
+
+    int result = countNumbersWithConditions(r);
+    printf("Кількість чисел із р розрядів: %d\n", result);
+
+    return 0;
+}
