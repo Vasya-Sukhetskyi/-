@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+// Функція для знаходження найбільшого спільного дільника (НСД)
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+// Функція для знаходження найменшого спільного кратного (НСК)
+int lcm(int a, int b) {
+    return (a * b) / gcd(a, b);
+}
+
+int main() {
+    int n; // Кількість чисел
+    printf("Введіть кількість чисел: ");
+    scanf("%d", &n);
+
+    int numbers[n]; // Масив для збереження чисел
+    printf("Введіть %d чисел, розділених пробілами: ", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &numbers[i]);
+    }
+
+    // Ініціалізація НСК значенням першого числа
+    int result = numbers[0];
+
+    // Обчислення НСК для всіх чисел у масиві
+    for (int i = 1; i < n; i++) {
+        result = lcm(result, numbers[i]);
+    }
+
+    printf("Найменше спільне кратне: %d\n", result);
+
+    return 0;
+}
