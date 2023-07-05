@@ -1,36 +1,31 @@
 #include <stdio.h>
 
-int countNumbersWithConditions(int r) {
-    int dp[31][10] = {0}; // Масив dp для збереження проміжних результатів
+int countNumbers(int r, int prev, int prevPrev) {
+    if (r == 0) {
+        return 1; // Досягнуто кінця розрядів, повертаємо 1 як один з можливих чисел
+    }
 
-    // Перша цифра може бути 5 або 9
-    dp[1][5] = dp[1][9] = 1;
+    int count = 0;
 
-    // Обчислюємо кількість чисел з розрядами r, що відповідають умові
-    for (int i = 2; i <= r; i++) {
-        for (int j = 0; j < 10; j++) {
-            // Забороняємо три однакові цифри підряд
-            for (int k = 0; k < 10; k++) {
-                if (k != j) {
-                    dp[i][j] += dp[i-1][k];
-                }
-            }
+    // Генеруємо числа, використовуючи цифри 5 та 9
+    for (int digit = 5; digit <= 9; digit += 4) {
+        // Перевіряємо умову трьох однакових цифр, які не стоять поруч
+        if (digit != prev || digit != prevPrev) {
+            count += countNumbers(r - 1, digit, prev); // Рекурсивний виклик для наступного розряду
         }
     }
 
-    // Сумуємо кількість чисел, що закінчуються на 5 або 9
-    int total_count = dp[r][5] + dp[r][9];
-
-    return total_count;
+    return count;
 }
 
 int main() {
     int r;
-    printf("Введіть ціле число р (р ≤ 30): ");
+    printf("Введіть кількість розрядів р (р ≤ 30): ");
     scanf("%d", &r);
 
-    int result = countNumbersWithConditions(r);
-    printf("Кількість чисел із р розрядів: %d\n", result);
+    int result = countNumbers(r, 0, 0); // Початкові значення prev та prevPrev - 0
+    printf("Кількість чисел із %d розрядів: %d\n", r, result);
 
     return 0;
 }
+
