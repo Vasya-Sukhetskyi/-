@@ -1,0 +1,26 @@
+#include <stdio.h>
+    //Рядок #include <stdio.h> підключає заголовочний файл <stdio.h>, який містить функції для введення/виведення в консоль.
+int find_equal_divisors(int n) {
+    //Оголошення функції find_equal_divisors з аргументом n. Ця функція знаходить кількість рівних дільників числа n.
+    int count = 0;
+    //Локальна змінна count ініціалізується зі значенням 0. Вона буде використовуватись для підрахунку кількості рівних дільників.
+    int m;
+    for (m = 1; m < n; m++) {
+        int quotient = n / m;
+        int remainder = n % m;
+    //У кожній ітерації обчислюються частка (quotient) і залишок (remainder) від ділення числа n на m.
+        if (quotient == remainder) {
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    int n;
+    printf("Введіть натуральне число n: ");
+    scanf("%d", &n);
+    int result = find_equal_divisors(n);
+    printf("Кількість рівних дільників числа %d: %d\n", n, result);
+    return 0;
+}
