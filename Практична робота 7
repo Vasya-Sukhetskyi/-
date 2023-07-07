@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+
+int circle_intersection(int x1, int y1, int r1, int x2, int y2, int r2) {
+    //Функція circle_intersection  приймає координати центрів та радіуси двох кола: (x1, y1, r1, x2, y2, r2). Вона спочатку обчислює відстань між центрами кола за допомогою формули евклідової відстані. 
+    double distance = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    
+    if (distance == 0 && r1 == r2) {
+        // Кола збігаються
+        return -1;
+    } else if (distance > r1 + r2 || distance < fabs(r1 - r2)) {
+        // Кола не перетинаються
+        return 0;
+    } else if (distance == r1 + r2 || distance == fabs(r1 - r2)) {
+        // Кола торкаються ззовні або зсередини
+        return 1;
+    } else {
+        // Кола перетинаються в двох точках
+        return 2;
+    }
+}
+
+int main() {
+    int x1, y1, r1, x2, y2, r2;
+    printf("Введіть координати центрів та радіуси двох кола (x1, y1, r1, x2, y2, r2): ");
+    scanf("%d %d %d %d %d %d", &x1, &y1, &r1, &x2, &y2, &r2);
+    
+    int intersection_points = circle_intersection(x1, y1, r1, x2, y2, r2);
+    //Функція circle_intersection з введеними значеннями, і результат - кількість точок перетину - зберігається у змінній intersection_points.
+    if (intersection_points == -1) {
+        printf("Кола збігаються, кількість точок перетину: -1 (безліч)\n");
+    } else {
+        printf("Кількість точок перетину: %d\n", intersection_points);
+    }
+    //За допомогою умовного оператора if-else, програма перевіряє значення intersection_points. Якщо значення дорівнює -1, виводиться повідомлення про безліч точок перетину. У протилежному випадку виводиться кількість точок перетину.
+    return 0;
+}
